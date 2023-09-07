@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<launch>
+	<node name="ironx_driver" pkg="tesr_ros_ironx_driver_pkg" type="ironx_driver.py"/>
+</launch>

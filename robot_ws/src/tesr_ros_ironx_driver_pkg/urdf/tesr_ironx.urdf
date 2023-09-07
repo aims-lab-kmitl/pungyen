@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<robot name="ironx">
+
+	<link name="base_footprint">
+		<visual>
+			<origin xyz="0.12645 0.125 0" rpy="1.5708 0 -1.5708"/>
+			<geometry> <mesh filename="package://tesr_ros_ironx_driver_pkg/meshes/tesr_ros_ironx.STL" scale="0.001 0.001 0.001"/>
+			</geometry>
+			<material name=""> <color rgba="1 1 1 1" /> 
+			</material>
+		</visual>
+	</link>
+</robot>

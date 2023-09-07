@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<launch>
+	<param name="use_sim_time" value="false"/>
+	<param name="robot_description" textfile="$(find tesr_ros_ironx_driver_pkg)/urdf/tesr_ironx.urdf"/>
+
+	<node name="ironx_driver" pkg="tesr_ros_ironx_driver_pkg" type="ironx_driver.py" output="screen"/>
+
+	<node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf" output="screen">
+		<param name="output_frame" value="odom"/>
+		<param name="base_footprint_frame" value="base_footprint"/>
+		<param name="freq" value="30.0"/>
+		<param name="sensor_timeout" value="1.0"/>
+		<param name="odom_used" value="true"/>
+		<param name="imu_used"  value="true"/>
+		<param name="vo_used"   value="false"/>
+		<remap from="/odom" to="/odom_raw"/>
+		<remap from="/imu_data" to="/imu"/>
+		<remap from="/robot_pose_ekf/odom_combined" to="/odom_combined"/>
+  	</node>
+
+	<node pkg="tesr_ros_ironx_navigation_pkg" type="odom_ekf.py" name="odom_ekf_node" output="screen">
+		<remap from="input" to="/odom_combined"/>
+		<remap from="output" to="/odom"/>
+  	</node>
+
+	<node name="robot_state_publisher"  pkg="robot_state_publisher" type="robot_state_publisher">
+		<param name="use_tf_static" value="false"/>
+	</node>
+
+	<node pkg="tf" type="static_transform_publisher" name="base_footprint_to_imu" args="-0.1 0 0.05 0 0 0 base_footprint base_imu_link 20"/>
+
+	<arg name="use_2Dcamera" default="false"/>
+	<group if="$(eval arg('use_2Dcamera') == true)">
+		<include file="$(find tesr_ros_ironx_camera_pkg)/launch/ironx_camera.launch" />
+	</group>
+
+	<group>
+		<include file="$(find rplidar_ros)/launch/rplidar_filtered.launch" />
+		<node pkg="tf" type="static_transform_publisher" name="base_foot_print_to_laser" args="0.1 0 0.1 3.1415926 0 0 base_footprint laser 20"/>
+	</group>
+
+	<node pkg="laser_filters" type="scan_to_scan_filter_chain" output="log" name="laser_filter">
+		<rosparam command="load" file="$(find tesr_ros_ironx_driver_pkg)/config/ironx_laserfilter.yaml"/>
+		<remap from="/scan" to="/scan_raw"/>
+		<remap from="/scan_filtered" to="/scan"/>
+  	</node>
+
+</launch>
