@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>robot_bringup</name>
+  <version>1.0.0</version>
+  <description>
+    This package using for startup all initial package for ironx
+  </description>
+  <maintainer email="james.ttpts@gmail.com">Thitipong T.</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>std_msgs</depend>
+  
+</package>

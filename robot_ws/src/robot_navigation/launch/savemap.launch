@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="map_file" default="$(find robot_navigation)/maps/map"/>
+
+    <node name="map_server" pkg="map_server" type="map_saver"  output="screen" args="-f $(arg map_file)"/>
+
+</launch>

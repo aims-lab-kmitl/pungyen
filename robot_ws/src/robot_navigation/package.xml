@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>robot_navigation</name>
+  <version>1.0.0</version>
+  <description>
+      This package using for SLAM and Navigation include hector SLAM,
+    save map, and navigation.
+  </description>
+  <maintainer email="james.ttpts@gmail.com">Thitipong T.</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>std_msgs</depend>
+
+</package>

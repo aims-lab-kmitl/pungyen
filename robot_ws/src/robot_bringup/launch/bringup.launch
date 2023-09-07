@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="urdf_file" default="$(find xacro)/xacro --inorder '$(find robot_bringup)/urdf/robot.urdf.xacro'" />
+    <param name="robot_description" command="$(arg urdf_file)" />
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+        <param name="publish_frequency" type="double" value="50.0" />
+        <param name="tf_prefix" value=""/>
+    </node>
+
+    <include file="$(find rplidar_ros)/launch/rplidar_a1.launch">
+        <arg name="serial_port" value="/dev/ttyUSB0"/>
+        <arg name="frame_id" value="base_scan"/>
+    </include>
+
+    <include file="$(find robot_serial)/launch/rosserial.launch"/>
+
+    <node name="robot_odom_node" pkg="robot_odom" type="robot_odom_node" output="screen">
+        <param name="odom_frame" type="string" value="odom"/>
+        <param name="imu_frame" type="string" value="imu_link"/>
+        <param name="base_frame" type="string" value="base_footprint"/>
+    </node>
+
+</launch>

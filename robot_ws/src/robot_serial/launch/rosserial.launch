@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+
+    <node name="robot_serial_node" pkg="robot_serial" type="rosserial.py" output="screen"/>
+
+</launch>
