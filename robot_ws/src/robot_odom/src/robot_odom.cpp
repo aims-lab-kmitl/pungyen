@@ -69,9 +69,9 @@ bool ROBOTODOM::init(){
     ROS_INFO("Initial data");
 
     // initialize publishers
-    imu_pub_    = nh_.advertise<sensor_msgs::Imu>("/imu", 100);
+    imu_pub_    = nh_.advertise<sensor_msgs::Imu>("/imu_data", 100);
     odom_pub_   = nh_.advertise<nav_msgs::Odometry>("/odom", 100);
-    ROS_INFO("ROS Publisher /imu");
+    ROS_INFO("ROS Publisher /imu_data");
     ROS_INFO("ROS Publisher /odom");
 
     // initialize subscribers
@@ -168,7 +168,7 @@ bool ROBOTODOM::update(){
 
     geometry_msgs::TransformStamped odom_tf;
     updateTF(odom_tf);
-    tf_broadcaster_.sendTransform(odom_tf);
+    // tf_broadcaster_.sendTransform(odom_tf);
 
     return true;
 }

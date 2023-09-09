@@ -34,6 +34,7 @@ catkin_package(
 
 catkin_install_python(PROGRAMS
   scripts/rosserial.py
+  scripts/position.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

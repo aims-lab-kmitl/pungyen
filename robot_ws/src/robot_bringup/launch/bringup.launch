@@ -9,11 +9,6 @@
         <param name="tf_prefix" value=""/>
     </node>
 
-    <include file="$(find rplidar_ros)/launch/rplidar_a1.launch">
-        <arg name="serial_port" value="/dev/ttyUSB0"/>
-        <arg name="frame_id" value="base_scan"/>
-    </include>
-
     <include file="$(find robot_serial)/launch/rosserial.launch"/>
 
     <node name="robot_odom_node" pkg="robot_odom" type="robot_odom_node" output="screen">
@@ -21,5 +16,16 @@
         <param name="imu_frame" type="string" value="imu_link"/>
         <param name="base_frame" type="string" value="base_footprint"/>
     </node>
+
+    <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf" output="screen">
+		<param name="output_frame" value="odom"/>
+		<param name="base_footprint_frame" value="base_footprint"/>
+		<param name="freq" value="30.0"/>
+		<param name="sensor_timeout" value="1.0"/>
+		<param name="odom_used" value="true"/>
+		<param name="imu_used"  value="true"/>
+		<param name="vo_used"   value="false"/>
+		<remap from="/robot_pose_ekf/odom_combined" to="/odom_combined"/>
+  	</node>
 
 </launch>
